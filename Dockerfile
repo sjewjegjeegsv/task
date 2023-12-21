@@ -5,5 +5,5 @@ CMD ["node", "app.js"]
 
 FROM python:3
 WORKDIR .
-COPY ..
+COPY . .
 CMD ["python", "app.py"]
