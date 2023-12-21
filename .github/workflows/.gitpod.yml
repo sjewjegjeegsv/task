@@ -1,9 +1,0 @@
-tasks:
-  - name: Install Docker
-    command: sudo apt-get update && sudo apt-get install -y docker.io
-
-  - name: Login to GitHub Package Registry
-    command: docker login -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }} docker.pkg.github.com
-
-  - name: Pull and run your Docker image
-    command: docker pull docker.pkg.github.com/sjewjegjeegsv/task:main && docker run -d docker.pkg.github.com/sjewjegjeegsv/task:main
