@@ -96,3 +96,24 @@ jobs:
         # This step uses the identity token to provision an ephemeral certificate
         # against the sigstore community Fulcio instance.
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
+  notify:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify in Telegram (on success)
+        if: success()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          message: 'Docker image успешно собран и отправлен.'
+      - name: Notify in Telegram (on failure)
+        if: failure()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          message: 'Сборка и/или отправка Docker image завершились неудовлетворительно.'
+
+  
+    
